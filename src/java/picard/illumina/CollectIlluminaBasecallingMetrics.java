@@ -42,26 +42,33 @@ import java.lang.Comparable;import java.lang.Double;import java.lang.Exception;i
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-/***
- *  A Command line tool to collect Illumina Basecalling metrics for a sequencing run
- *  Requires a Lane and an input file of Barcodes to expect.
- *  Outputs metrics:
- *    *  Mean Clusters Per Tile
- *    *  Standard Deviation of Clusters Per Tile
- *    *  Mean Pf Clusters Per Tile
- *    *  Standard Deviation of Pf Clusters Per Tile
- *    *  Mean Percentage of Pf Clusters Per Tile
- *    *  Standard Deviation of Percentage of Pf Clusters Per Tile
- */
+
 @CommandLineProgramProperties(
-        usage = CollectIlluminaBasecallingMetrics.USAGE,
-        usageShort = CollectIlluminaBasecallingMetrics.USAGE,
+        usage = CollectIlluminaBasecallingMetrics.USAGE_SUMMARY + CollectIlluminaBasecallingMetrics.USAGE_DETAILS,
+        usageShort = CollectIlluminaBasecallingMetrics.USAGE_SUMMARY,
         programGroup = Illumina.class
 )
 public class CollectIlluminaBasecallingMetrics extends CommandLineProgram {
+    static final String USAGE_SUMMARY = "A Command line tool to collect Illumina Basecalling metrics for a sequencing run.  ";
+    static final String USAGE_DETAILS = "Given an Illumina basecalling directory, this tool produces per-barcode and per-tile basecall metrics for each lane of a sequencing run." +
+            "Feed the lane number, BASECALLS_DIR=file, READ_STRUCTURE, and an input file of barcodes into the program.  Program will output metrics including:" +
+            "the total numbers of bases, reads, and clusters, as well as the percentages of each that passed Illumina quality filters (Pf) per sample barcode (index).  " +
+            "In addition, this tool produces the mean values of clusters per tile and Pf-clusters per tile.  "   +
+
+            "<h4>Usage example:</h4>" +
+            "<pre>" +
+            "java -jar picard.jar IlluminaBasecallsToFastq \\<br />" +
+            "      BASECALLS_DIR=<run directory>/Data/Intensities/BaseCalls/L<lane>/C<cycle>.1/s_<lane>_<tile>.bcl \\" +
+            "      LANE=1 \\<br />" +
+            "      READ_STRUCTURE=25T8B25T \\<br />" +
+            "      INPUT=barcode_list.txt \\<br />" +
+            "      OUTPUT=output.txt \\<br />" +
+            "</pre>"
+    ;
+
+
     //Command Line Arguments
-    static final String USAGE = "Given an Illumina basecalling and a lane, produces per-lane-barcode basecalling metrics";
-    
+
     @Option(doc="The Illumina basecalls output directory from which data are read", shortName="B")
     public File BASECALLS_DIR;
 

@@ -30,13 +30,19 @@ import java.util.TreeSet;
  * specified data type.  If NO data type is specified then the default data types used by IlluminaBasecallsToSam are used.
  */
 @CommandLineProgramProperties(
-        usage = "Check that the files to provide the data specified by DATA_TYPES are available, exist, and are reasonably sized for every tile/cycle.  " +
-                "Reasonably sized means non-zero sized for files that exist per tile and equal size for binary files that exist per cycle/per tile. " +
-                "CheckIlluminaDirectory DOES NOT check that the individual records in a file are well-formed.",
-        usageShort = "Asserts the validity of the data in the specified Illumina basecalling data",
+        usage = CheckIlluminaDirectory.USAGE_SUMMARY + CheckIlluminaDirectory.USAGE_DETAILS,
+        usageShort = CheckIlluminaDirectory.USAGE_SUMMARY,
         programGroup = Illumina.class
 )
 public class CheckIlluminaDirectory extends CommandLineProgram {
+    static final String USAGE_SUMMARY = "<b>Asserts the validity of the data in the specified Illumina basecalling (BCL) data</b>";
+    static final String USAGE_DETAILS = "Check that the files to provide the data specified by DATA_TYPES {Position, BaseCalls, QualityScores, PF, or Barcodes} " +
+            "are available, exist, and are reasonably sized for every tile and cycle.  Reasonably sized means non-zero sized for files that exist per tile and equal size for " +
+            "binary files that exist per cycle or per tile. CheckIlluminaDirectory DOES NOT check that the individual records in a file are well-formed.  " +
+            "Generally, the first step in an analysis pipeline."     +
+            "Add example code here"
+;
+
     private static final Log log = Log.getInstance(CheckIlluminaDirectory.class);
 
     // The following attributes define the command-line arguments
