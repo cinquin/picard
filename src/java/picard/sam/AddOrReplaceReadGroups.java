@@ -66,13 +66,13 @@ public class AddOrReplaceReadGroups extends CommandLineProgram {
     @Option(shortName = "ID", doc = "Read Group ID")
     public String RGID = "1";
 
-    @Option(shortName = "LB", doc = "Read Group library")
+    @Option(shortName = "LB", doc = "Read Group library", optional = true)
     public String RGLB;
 
     @Option(shortName = "PL", doc = "Read Group platform (e.g. illumina, solid)")
     public String RGPL;
 
-    @Option(shortName = "PU", doc = "Read Group platform unit (eg. run barcode)")
+    @Option(shortName = "PU", doc = "Read Group platform unit (eg. run barcode)", optional = true)
     public String RGPU;
 
     @Option(shortName = "SM", doc = "Read Group sample name")
@@ -113,10 +113,14 @@ public class AddOrReplaceReadGroups extends CommandLineProgram {
 
         // create the read group we'll be using
         final SAMReadGroupRecord rg = new SAMReadGroupRecord(RGID);
-        rg.setLibrary(RGLB);
+        if (RGLB != null) {
+            rg.setLibrary(RGLB);
+        }
         rg.setPlatform(RGPL);
         rg.setSample(RGSM);
-        rg.setPlatformUnit(RGPU);
+        if (RGPU != null) {
+            rg.setPlatformUnit(RGPU);
+        }
         if (RGCN != null) rg.setSequencingCenter(RGCN);
         if (RGDS != null) rg.setDescription(RGDS);
         if (RGDT != null) rg.setRunDate(RGDT);
